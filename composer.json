@@ -1,0 +1,73 @@
+{
+  "name": "siriussupreme/sirius-broadcast",
+  "description": "Broadcast（广播）",
+  "type": "library",
+  "keywords": [ ],
+  "homepage": "https://github.com/siriusSupreme/sirius-broadcast",
+  "license": [
+    "MIT"
+  ],
+  "authors": [
+    {
+      "name": "siriusSupreme",
+      "email": "guoplc@163.com",
+      "homepage": "https://github.com/siriusSupreme/sirius-broadcast",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0",
+    "siriussupreme/sirius-container": "^1.0",
+    "siriussupreme/sirius-support": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sirius\\Broadcast\\": "src/"
+    },
+    "classmap": [],
+    "files": []
+  },
+  "autoload-dev": {
+    "psr-4": {},
+    "classmap": []
+  },
+  "suggest": {},
+  "extra": {},
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
+    }
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
+  },
+  "scripts": {
+    "pre-install-cmd": [],
+    "post-install-cmd": [],
+    "pre-update-cmd": [],
+    "post-update-cmd": [],
+    "pre-status-cmd": [],
+    "post-status-cmd": [],
+    "pre-package-install": [],
+    "post-package-install": [],
+    "pre-package-update": [],
+    "post-package-update": [],
+    "pre-package-uninstall": [],
+    "post-package-uninstall": [],
+    "pre-autoload-dump": [],
+    "post-autoload-dump": [],
+    "post-root-package-install": [],
+    "post-create-project-cmd": []
+  },
+  "archive": {
+    "exclude": []
+  }
+}
