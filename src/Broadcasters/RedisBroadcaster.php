@@ -3,7 +3,7 @@
 namespace Sirius\Broadcast\Broadcasters;
 
 use Sirius\Support\Arr;
-use Illuminate\Support\Str;
+use Sirius\Support\Str;
 use Illuminate\Contracts\Redis\Factory as Redis;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -39,7 +39,7 @@ class RedisBroadcaster extends Broadcaster
     /**
      * Authenticate the incoming request for a given channel.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Psr\Http\Message\RequestInterface  $request
      * @return mixed
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      */
@@ -62,7 +62,7 @@ class RedisBroadcaster extends Broadcaster
     /**
      * Return the valid authentication response.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Psr\Http\Message\RequestInterface  $request
      * @param  mixed  $result
      * @return mixed
      */

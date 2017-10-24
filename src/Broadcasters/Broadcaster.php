@@ -3,8 +3,8 @@
 namespace Sirius\Broadcast\Broadcasters;
 
 use ReflectionFunction;
-use Illuminate\Support\Str;
-use Illuminate\Container\Container;
+use Sirius\Support\Str;
+use Sirius\Container\Container;
 use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Contracts\Routing\BindingRegistrar;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -43,7 +43,7 @@ abstract class Broadcaster implements BroadcasterContract
     /**
      * Authenticate the incoming request for a given channel.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Psr\Http\Message\RequestInterface  $request
      * @param  string  $channel
      * @return mixed
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException

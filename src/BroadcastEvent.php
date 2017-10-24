@@ -5,7 +5,7 @@ namespace Sirius\Broadcast;
 use ReflectionClass;
 use ReflectionProperty;
 use Sirius\Support\Arr;
-use Illuminate\Bus\Queueable;
+use Sirius\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Sirius\Support\Contracts\Arrayable;
 use Sirius\Broadcast\Contracts\Broadcaster;

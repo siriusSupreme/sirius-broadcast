@@ -7,7 +7,7 @@ interface Broadcaster
     /**
      * Authenticate the incoming request for a given channel.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Psr\Http\Message\RequestInterface  $request
      * @return mixed
      */
     public function auth($request);
@@ -15,7 +15,7 @@ interface Broadcaster
     /**
      * Return the valid authentication response.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Psr\Http\Message\RequestInterface  $request
      * @param  mixed  $result
      * @return mixed
      */

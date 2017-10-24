@@ -72,7 +72,7 @@ class BroadcastManager implements FactoryContract
     /**
      * Get the socket ID for the given request.
      *
-     * @param  \Illuminate\Http\Request|null  $request
+     * @param  \Psr\Http\Message\RequestInterface|null  $request
      * @return string|null
      */
     public function socket($request = null)

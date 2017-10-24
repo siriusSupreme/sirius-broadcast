@@ -25,7 +25,7 @@ class PendingBroadcast
      *
      * @param  \Sirius\Event\Contracts\Dispatcher  $events
      * @param  mixed  $event
-     * @return void
+     *
      */
     public function __construct(Dispatcher $events, $event)
     {

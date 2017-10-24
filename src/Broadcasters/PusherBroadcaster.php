@@ -4,7 +4,7 @@ namespace Sirius\Broadcast\Broadcasters;
 
 use Pusher\Pusher;
 use Sirius\Support\Arr;
-use Illuminate\Support\Str;
+use Sirius\Support\Str;
 use Sirius\Broadcast\BroadcastException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -31,7 +31,7 @@ class PusherBroadcaster extends Broadcaster
     /**
      * Authenticate the incoming request for a given channel.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Psr\Http\Message\RequestInterface  $request
      * @return mixed
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      */
@@ -54,7 +54,7 @@ class PusherBroadcaster extends Broadcaster
     /**
      * Return the valid authentication response.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Psr\Http\Message\RequestInterface  $request
      * @param  mixed  $result
      * @return mixed
      */
