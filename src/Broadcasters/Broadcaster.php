@@ -3,11 +3,10 @@
 namespace Sirius\Broadcast\Broadcasters;
 
 use ReflectionFunction;
-use function Sirius\Support\collect;
-use Sirius\Support\Str;
-use Sirius\Container\Container;
-use Sirius\Broadcast\Exceptions\AccessDeniedHttpException;
 use Sirius\Broadcast\Contracts\Broadcaster as BroadcasterContract;
+use Sirius\Broadcast\Exceptions\AccessDeniedHttpException;
+use Sirius\Support\Str;
+use function Sirius\Support\collect;
 
 abstract class Broadcaster implements BroadcasterContract
 {
@@ -116,12 +115,6 @@ abstract class Broadcaster implements BroadcasterContract
      */
     protected function resolveExplicitBindingIfPossible($key, $value)
     {
-        $binder = $this->binder();
-
-        if ($binder && $binder->getBindingCallback($key)) {
-            return call_user_func($binder->getBindingCallback($key), $value);
-        }
-
         return $value;
     }
 
