@@ -2,7 +2,7 @@
 
 namespace Sirius\Broadcast\Broadcasters;
 
-use Illuminate\Support\Arr;
+use Sirius\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Redis\Factory as Redis;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;

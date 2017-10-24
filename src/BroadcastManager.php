@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Broadcasting;
+namespace Sirius\Broadcast;
 
 use Closure;
 use Pusher\Pusher;
@@ -90,7 +90,7 @@ class BroadcastManager implements FactoryContract
      * Begin broadcasting an event.
      *
      * @param  mixed|null  $event
-     * @return \Illuminate\Broadcasting\PendingBroadcast|void
+     * @return \Sirius\Broadcast\PendingBroadcast|void
      */
     public function event($event = null)
     {

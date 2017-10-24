@@ -3,9 +3,9 @@
 namespace Sirius\Broadcast\Broadcasters;
 
 use Pusher\Pusher;
-use Illuminate\Support\Arr;
+use Sirius\Support\Arr;
 use Illuminate\Support\Str;
-use Illuminate\Broadcasting\BroadcastException;
+use Sirius\Broadcast\BroadcastException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class PusherBroadcaster extends Broadcaster

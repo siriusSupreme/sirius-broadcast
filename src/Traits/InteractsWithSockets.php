@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Broadcasting;
+namespace Sirius\Broadcast\Traits;
 
 use Illuminate\Support\Facades\Broadcast;
 

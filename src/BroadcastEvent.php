@@ -1,13 +1,13 @@
 <?php
 
-namespace Illuminate\Broadcasting;
+namespace Sirius\Broadcast;
 
 use ReflectionClass;
 use ReflectionProperty;
-use Illuminate\Support\Arr;
+use Sirius\Support\Arr;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Contracts\Support\Arrayable;
+use Sirius\Support\Contracts\Arrayable;
 use Sirius\Broadcast\Contracts\Broadcaster;
 
 class BroadcastEvent implements ShouldQueue

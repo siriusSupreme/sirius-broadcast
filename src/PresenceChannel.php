@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Broadcasting;
+namespace Sirius\Broadcast;
 
 class PresenceChannel extends Channel
 {
@@ -8,7 +8,7 @@ class PresenceChannel extends Channel
      * Create a new channel instance.
      *
      * @param  string  $name
-     * @return void
+     *
      */
     public function __construct($name)
     {

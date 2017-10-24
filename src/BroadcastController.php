@@ -1,6 +1,6 @@
 <?php
 
-namespace Illuminate\Broadcasting;
+namespace Sirius\Broadcast;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;

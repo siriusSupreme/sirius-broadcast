@@ -1,15 +1,15 @@
 <?php
 
-namespace Illuminate\Broadcasting;
+namespace Sirius\Broadcast;
 
-use Illuminate\Contracts\Events\Dispatcher;
+use Sirius\Event\Contracts\Dispatcher;
 
 class PendingBroadcast
 {
     /**
      * The event dispatcher implementation.
      *
-     * @var \Illuminate\Contracts\Events\Dispatcher
+     * @var \Sirius\Event\Contracts\Dispatcher
      */
     protected $events;
 
@@ -23,7 +23,7 @@ class PendingBroadcast
     /**
      * Create a new pending broadcast instance.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $events
+     * @param  \Sirius\Event\Contracts\Dispatcher  $events
      * @param  mixed  $event
      * @return void
      */

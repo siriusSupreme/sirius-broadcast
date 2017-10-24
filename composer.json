@@ -17,8 +17,11 @@
   ],
   "require": {
     "php": ">=7.0.0",
+    "pusher/pusher-php-server": "^3.0",
     "siriussupreme/sirius-container": "^1.0",
-    "siriussupreme/sirius-support": "^1.0"
+    "siriussupreme/sirius-support": "^1.0",
+    "siriussupreme/sirius-queue": "^1.0",
+    "siriussupreme/sirius-bus": "^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^6.4"
@@ -34,7 +37,9 @@
     "psr-4": {},
     "classmap": []
   },
-  "suggest": {},
+  "suggest": {
+    "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (~3.0)."
+  },
   "extra": {},
   "minimum-stability": "stable",
   "prefer-stable": true,
