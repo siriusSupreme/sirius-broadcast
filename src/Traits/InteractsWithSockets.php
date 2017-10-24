@@ -2,7 +2,8 @@
 
 namespace Sirius\Broadcast\Traits;
 
-use Illuminate\Support\Facades\Broadcast;
+use Sirius\Broadcast\BroadcastManager;
+use Sirius\Container\Container;
 
 trait InteractsWithSockets
 {
@@ -20,7 +21,7 @@ trait InteractsWithSockets
      */
     public function dontBroadcastToCurrentUser()
     {
-        $this->socket = Broadcast::socket();
+        $this->socket = BroadcastManager::getInstance(Container::getInstance())->socket();
 
         return $this;
     }

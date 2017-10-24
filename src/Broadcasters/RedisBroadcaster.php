@@ -4,15 +4,15 @@ namespace Sirius\Broadcast\Broadcasters;
 
 use Sirius\Support\Arr;
 use Sirius\Support\Str;
-use Illuminate\Contracts\Redis\Factory as Redis;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Sirius\Redis\Contracts\Factory as Redis;
+use Sirius\Broadcast\Exceptions\AccessDeniedHttpException;
 
 class RedisBroadcaster extends Broadcaster
 {
     /**
      * The Redis instance.
      *
-     * @var \Illuminate\Contracts\Redis\Factory
+     * @var \Sirius\Redis\Contracts\Factory
      */
     protected $redis;
 
@@ -26,8 +26,9 @@ class RedisBroadcaster extends Broadcaster
     /**
      * Create a new broadcaster instance.
      *
-     * @param  \Illuminate\Contracts\Redis\Factory  $redis
+     * @param  \Sirius\Redis\Contracts\Factory  $redis
      * @param  string  $connection
+     *
      * @return void
      */
     public function __construct(Redis $redis, $connection = null)
@@ -41,7 +42,7 @@ class RedisBroadcaster extends Broadcaster
      *
      * @param  \Psr\Http\Message\RequestInterface  $request
      * @return mixed
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     * @throws \Sirius\Broadcast\Exceptions\AccessDeniedHttpException
      */
     public function auth($request)
     {

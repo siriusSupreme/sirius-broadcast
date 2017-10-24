@@ -3,11 +3,10 @@
 namespace Sirius\Broadcast\Broadcasters;
 
 use ReflectionFunction;
+use function Sirius\Support\collect;
 use Sirius\Support\Str;
 use Sirius\Container\Container;
-use Illuminate\Contracts\Routing\UrlRoutable;
-use Illuminate\Contracts\Routing\BindingRegistrar;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Sirius\Broadcast\Exceptions\AccessDeniedHttpException;
 use Sirius\Broadcast\Contracts\Broadcaster as BroadcasterContract;
 
 abstract class Broadcaster implements BroadcasterContract
@@ -18,13 +17,6 @@ abstract class Broadcaster implements BroadcasterContract
      * @var array
      */
     protected $channels = [];
-
-    /**
-     * The binding registrar instance.
-     *
-     * @var BindingRegistrar
-     */
-    protected $bindingRegistrar;
 
     /**
      * Register a channel authenticator.
@@ -46,7 +38,7 @@ abstract class Broadcaster implements BroadcasterContract
      * @param  \Psr\Http\Message\RequestInterface  $request
      * @param  string  $channel
      * @return mixed
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     * @throws \Sirius\Broadcast\Exceptions\AccessDeniedHttpException
      */
     protected function verifyUserCanAccessChannel($request, $channel)
     {
@@ -140,14 +132,11 @@ abstract class Broadcaster implements BroadcasterContract
      * @param  mixed  $value
      * @param  array  $callbackParameters
      * @return mixed
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     * @throws \Sirius\Broadcast\Exceptions\AccessDeniedHttpException
      */
     protected function resolveImplicitBindingIfPossible($key, $value, $callbackParameters)
     {
         foreach ($callbackParameters as $parameter) {
-            if (! $this->isImplicitlyBindable($key, $parameter)) {
-                continue;
-            }
 
             $instance = $parameter->getClass()->newInstance();
 
@@ -159,19 +148,6 @@ abstract class Broadcaster implements BroadcasterContract
         }
 
         return $value;
-    }
-
-    /**
-     * Determine if a given key and parameter is implicitly bindable.
-     *
-     * @param  string  $key
-     * @param  \ReflectionParameter  $parameter
-     * @return bool
-     */
-    protected function isImplicitlyBindable($key, $parameter)
-    {
-        return $parameter->name === $key && $parameter->getClass() &&
-                        $parameter->getClass()->isSubclassOf(UrlRoutable::class);
     }
 
     /**
@@ -187,18 +163,4 @@ abstract class Broadcaster implements BroadcasterContract
         }, $channels);
     }
 
-    /**
-     * Get the model binding registrar instance.
-     *
-     * @return \Illuminate\Contracts\Routing\BindingRegistrar
-     */
-    protected function binder()
-    {
-        if (! $this->bindingRegistrar) {
-            $this->bindingRegistrar = Container::getInstance()->bound(BindingRegistrar::class)
-                        ? Container::getInstance()->make(BindingRegistrar::class) : null;
-        }
-
-        return $this->bindingRegistrar;
-    }
 }

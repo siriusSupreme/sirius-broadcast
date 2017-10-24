@@ -12,6 +12,9 @@ use Sirius\Broadcast\Contracts\ShouldBroadcastNow;
 use Sirius\Broadcast\Broadcasters\RedisBroadcaster;
 use Sirius\Broadcast\Broadcasters\PusherBroadcaster;
 use Sirius\Broadcast\Contracts\Factory as FactoryContract;
+use Sirius\Redis\RedisManager;
+use Sirius\Support\Contracts\Repository;
+use Sirius\Support\Repository as Config;
 
 /**
  * @mixin \Sirius\Broadcast\Contracts\Broadcaster
@@ -21,9 +24,23 @@ class BroadcastManager implements FactoryContract
     /**
      * The application instance.
      *
-     * @var \Illuminate\Foundation\Application
+     * @var \Sirius\Container\Container
      */
-    protected $app;
+    protected $container;
+
+  /**
+   * Config（Repository）
+   *
+   * @var \Sirius\Support\Contracts\Repository|null
+   */
+    protected $config=null;
+
+  /**
+   * 广播 管理器 实例
+   *
+   * @var null|self
+   */
+    private static $instance=null;
 
     /**
      * The array of resolved broadcast drivers.
@@ -42,32 +59,48 @@ class BroadcastManager implements FactoryContract
     /**
      * Create a new manager instance.
      *
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return void
+     * @param  \Sirius\Container\Container  $container
+     * @param  \Sirius\Support\Contracts\Repository|array
+     *
      */
-    public function __construct($app)
+    public function __construct($container,$config=[])
     {
-        $this->app = $app;
+//      加载默认配置
+      $defaults=require __DIR__.'/config.php';
+//      配置 数组化
+      if ($config instanceof Repository){
+        $config=$config->all();
+      }else{
+        $config=(array) $config;
+      }
+//      合并配置
+      $config=array_merge( $defaults,$config);
+
+      $this->config=new Config($config);
+
+      self::$instance=$this;
+
+        $this->container = $container;
+
     }
 
-    /**
-     * Register the routes for handling broadcast authentication and sockets.
-     *
-     * @param  array|null  $attributes
-     * @return void
-     */
-    public function routes(array $attributes = null)
-    {
-        if ($this->app->routesAreCached()) {
-            return;
+  /**
+   * 获取 广播 管理器 实例
+   *
+   * @param $container
+   * @param \Sirius\Support\Contracts\Repository|array $config
+   * @param bool $force
+   *
+   * @return null|BroadcastManager
+   */
+    public static function getInstance( $container, $config = [],$force=false){
+        if (is_null( self::$instance) || $force===true){
+          self::$instance=new self( $container, $config);
         }
 
-        $attributes = $attributes ?: ['middleware' => ['web']];
-
-        $this->app['router']->group($attributes, function ($router) {
-            $router->post('/broadcasting/auth', BroadcastController::class.'@authenticate');
-        });
+        return self::$instance;
     }
+
 
     /**
      * Get the socket ID for the given request.
@@ -77,11 +110,11 @@ class BroadcastManager implements FactoryContract
      */
     public function socket($request = null)
     {
-        if (! $request && ! $this->app->bound('request')) {
-            return;
+        if (! $request && ! $this->container->bound('request')) {
+            return null;
         }
 
-        $request = $request ?: $this->app['request'];
+        $request = $request ?: $this->container['request'];
 
         return $request->header('X-Socket-ID');
     }
@@ -90,11 +123,11 @@ class BroadcastManager implements FactoryContract
      * Begin broadcasting an event.
      *
      * @param  mixed|null  $event
-     * @return \Sirius\Broadcast\PendingBroadcast|void
+     * @return \Sirius\Broadcast\PendingBroadcast
      */
     public function event($event = null)
     {
-        return new PendingBroadcast($this->app->make('events'), $event);
+        return new PendingBroadcast($this->container->make('events'), $event);
     }
 
     /**
@@ -121,7 +154,7 @@ class BroadcastManager implements FactoryContract
             $queue = $event->queue;
         }
 
-        $this->app->make('queue')->connection($connection)->pushOn(
+        $this->container->make('queue')->connection($connection)->pushOn(
             $queue, new BroadcastEvent(clone $event)
         );
     }
@@ -198,7 +231,7 @@ class BroadcastManager implements FactoryContract
      */
     protected function callCustomCreator(array $config)
     {
-        return $this->customCreators[$config['driver']]($this->app, $config);
+        return $this->customCreators[$config['driver']]($this->container, $config);
     }
 
     /**
@@ -224,7 +257,7 @@ class BroadcastManager implements FactoryContract
     protected function createRedisDriver(array $config)
     {
         return new RedisBroadcaster(
-            $this->app->make('redis'), $config['connection'] ?? null
+            new RedisManager( 'phpredis', $config), $config['connection'] ?? null
         );
     }
 
@@ -237,7 +270,7 @@ class BroadcastManager implements FactoryContract
     protected function createLogDriver(array $config)
     {
         return new LogBroadcaster(
-            $this->app->make(LoggerInterface::class)
+            $this->container->make(LoggerInterface::class)
         );
     }
 
@@ -260,7 +293,7 @@ class BroadcastManager implements FactoryContract
      */
     protected function getConfig($name)
     {
-        return $this->app['config']["broadcasting.connections.{$name}"];
+        return $this->config["connections.{$name}"];
     }
 
     /**
@@ -270,7 +303,7 @@ class BroadcastManager implements FactoryContract
      */
     public function getDefaultDriver()
     {
-        return $this->app['config']['broadcasting.default'];
+        return $this->config['default'];
     }
 
     /**
@@ -281,7 +314,7 @@ class BroadcastManager implements FactoryContract
      */
     public function setDefaultDriver($name)
     {
-        $this->app['config']['broadcasting.default'] = $name;
+        $this->config['default'] = $name;
     }
 
     /**

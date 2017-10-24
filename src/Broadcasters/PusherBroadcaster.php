@@ -5,8 +5,8 @@ namespace Sirius\Broadcast\Broadcasters;
 use Pusher\Pusher;
 use Sirius\Support\Arr;
 use Sirius\Support\Str;
-use Sirius\Broadcast\BroadcastException;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Sirius\Broadcast\Exceptions\BroadcastException;
+use Sirius\Broadcast\Exceptions\AccessDeniedHttpException;
 
 class PusherBroadcaster extends Broadcaster
 {
@@ -21,7 +21,7 @@ class PusherBroadcaster extends Broadcaster
      * Create a new broadcaster instance.
      *
      * @param  \Pusher\Pusher  $pusher
-     * @return void
+     *
      */
     public function __construct(Pusher $pusher)
     {
@@ -33,7 +33,7 @@ class PusherBroadcaster extends Broadcaster
      *
      * @param  \Psr\Http\Message\RequestInterface  $request
      * @return mixed
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+     * @throws \Sirius\Broadcast\Exceptions\AccessDeniedHttpException
      */
     public function auth($request)
     {

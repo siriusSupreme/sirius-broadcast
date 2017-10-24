@@ -19,6 +19,7 @@
     "php": ">=7.0.0",
     "pusher/pusher-php-server": "^3.0",
     "siriussupreme/sirius-container": "^1.0",
+    "siriussupreme/sirius-redis": "^1.0",
     "siriussupreme/sirius-support": "^1.0",
     "siriussupreme/sirius-queue": "^1.0",
     "siriussupreme/sirius-bus": "^1.0"

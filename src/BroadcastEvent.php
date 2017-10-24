@@ -5,10 +5,11 @@ namespace Sirius\Broadcast;
 use ReflectionClass;
 use ReflectionProperty;
 use Sirius\Support\Arr;
-use Sirius\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Sirius\Bus\Traits\Queueable;
+use Sirius\Queue\Contracts\ShouldQueue;
 use Sirius\Support\Contracts\Arrayable;
 use Sirius\Broadcast\Contracts\Broadcaster;
+use function Sirius\Support\data_get;
 
 class BroadcastEvent implements ShouldQueue
 {
@@ -25,7 +26,7 @@ class BroadcastEvent implements ShouldQueue
      * Create a new job handler instance.
      *
      * @param  mixed  $event
-     * @return void
+     *
      */
     public function __construct($event)
     {
