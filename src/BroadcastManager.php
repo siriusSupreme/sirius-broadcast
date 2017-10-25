@@ -13,6 +13,7 @@ use Sirius\Broadcast\Broadcasters\RedisBroadcaster;
 use Sirius\Broadcast\Broadcasters\PusherBroadcaster;
 use Sirius\Broadcast\Contracts\Factory as FactoryContract;
 use Sirius\Redis\RedisManager;
+use Sirius\Event\Dispatcher;
 use Sirius\Support\Contracts\Repository;
 use Sirius\Support\Repository as Config;
 
@@ -127,7 +128,7 @@ class BroadcastManager implements FactoryContract
      */
     public function event($event = null)
     {
-        return new PendingBroadcast($this->container->make('events'), $event);
+        return new PendingBroadcast(new Dispatcher(), $event);
     }
 
     /**
