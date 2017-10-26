@@ -79,8 +79,6 @@ class BroadcastManager implements FactoryContract
 
       $this->config=new Config($config);
 
-      self::$instance=$this;
-
         $this->container = $container;
 
     }
